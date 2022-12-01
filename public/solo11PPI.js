@@ -1,0 +1,20 @@
+"use strict";
+import { load } from 'cheerio'
+import fetch from "node-fetch";
+import fs from 'fs/promises';
+
+export const urlReleasePPI = 'https://www.bls.gov/ppi/';
+export let arrReleasePPI = [];
+export async function afuncReleasePPI(url) {
+  arrReleasePPI = [];
+  let response = await fetch(url);
+  let html = await response.text();
+  // * uncomment below to check full HTML data
+  // await fs.writeFile("troubleshootFullHTML.html", html)
+  let $ = load(html);
+  $('.p', html).each(function() {
+    arrReleasePPI.push($(this).text())
+  })
+  // * uncomment below to check array data being sent
+  // await fs.writeFile("troubleshootSentData.html", arrReleasePPI)
+}
