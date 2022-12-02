@@ -22,40 +22,41 @@ addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
 
-  // afuncReverseRepoPuppeteer()
-  // afuncGreedFearLoop()
-  // afuncNonFarmPayrollLoop()
-  // afuncJoltsLoop()
-  // afuncWeeklyJoblessLoop()
-  // afuncMichConsumerLoop()
-  // afuncFedRatesPuppeteer()
-  // afuncMortgageRatesLoop()
-  // afuncReleasePPILoop()
-  // afuncReleaseCPILoop()
-  // afuncFedScheduleLoop()
-  // afuncCpiScheduleLoop()
-  // afuncUnemploymentLoop()
-  // afuncHistoryPELoop()
-  // afuncIndexPCELoop()
-  // afuncFomcMinutesPuppeteer()
-  // afuncRatioPEPuppeteer()
-  // afuncCalendarIPOPuppeteer()
+  afuncReverseRepoPuppeteer()
+  afuncGreedFearLoop()
+  afuncNonFarmPayrollLoop()
+  afuncJoltsLoop()
+  afuncWeeklyJoblessLoop()
+  afuncMichConsumerLoop()
+  afuncFedRatesPuppeteer()
+  afuncMortgageRatesLoop()
+  afuncReleasePPILoop()
+  afuncReleaseCPILoop()
+  afuncFedScheduleLoop()
+  afuncCpiScheduleLoop()
+  afuncUnemploymentLoop()
+  afuncHistoryPELoop()
+  afuncIndexPCELoop()
+  afuncFomcMinutesPuppeteer()
+  afuncRatioPEPuppeteer()
+
   //////////////////////////////////////////////
-  // afuncAccessNewswirePuppeteer()
-  // afuncFinancialTimesLoop()
-  // afuncGlobalNewswireLoop()
-  // afuncprNewswireLoop()
-  // afuncReutersBusinessLoop()
-  // afuncWsjFinanceLoop()
-  // afuncWsjNewsLoop()
-  // afuncCNBCLoop()
+  afuncAccessNewswirePuppeteer()
+  afuncFinancialTimesLoop()
+  afuncGlobalNewswireLoop()
+  afuncprNewswireLoop()
+  afuncReutersBusinessLoop()
+  afuncWsjFinanceLoop()
+  afuncWsjNewsLoop()
+  afuncCNBCLoop()
   afuncYahooLoop()
   afuncBarronsLoop()
   afuncBusinessNewswireLoop()
   afuncSEC13dFilingsLoop()
   afuncSEC13gLoop()
+  afuncGoogleNews2()
   // afuncSeekingAlphaPuppeteer()
-  // afuncGoogleNews2()
+  // afuncCalendarIPOPuppeteer()
   // speed testing purposes
   // afuncGoogleNews10minLoop() 
 
@@ -160,12 +161,28 @@ function funcShowHideStockList() {
   }
 }
 
-function sendAlert(htmlID) {
+async function sendAlert(htmlID) {
   if (document.querySelector(htmlID).innerHTML) {
-    playAlert();
+    await playAlert();
     setTimeout(playAlert, 3000);
   }
 }
+
+
+async function sendAlert2(htmlID) {
+  if (document.getElementById(htmlID).hasChildNodes()) {
+    await playAlert();
+    setTimeout(playAlert, 3000);
+  }
+}
+
+async function sendAlert3(htmlID) {
+  if (document.getElementById(htmlID).hasChildNodes().hasChildNodes()) {
+    await playAlert();
+    setTimeout(playAlert, 3000);
+  }
+}
+
 ////////////Shared Code Set////////////
 
 //////////Puppeteer-ReverseRepo//////////
@@ -431,6 +448,12 @@ let responseJsonSEC13dFilings;
 async function afuncSEC13dFilingsLoop() {
   let responseSEC13dFilings = await fetch("/SEC13dFilings");
   responseJsonSEC13dFilings = await responseSEC13dFilings.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
+
+
+
+
+
+
   if (responseJsonSEC13dFilings.product1[0] === undefined) {
     document.querySelector("#SEC13dFilingsSendtoHTML1").innerHTML = "Error! Scraping Search Tag Not Found!"
   } else {
@@ -438,7 +461,16 @@ async function afuncSEC13dFilingsLoop() {
     runCountSEC13dFilings += 1;
     funcFindLinks13d()
     funcSendtoBrowserSEC13dFilings()
+
+
+
+
+
+
+
+
   }
+
   setTimeout(afuncSEC13dFilingsLoop, rerunTimer1())
 }
 
@@ -458,11 +490,9 @@ function funcFindLinks13d() {
 }
 
 function funcSendtoBrowserSEC13dFilings() {
-  document.querySelector("#SEC13dFilingsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13dFilings}`;
   if (sharedFinalArticlesArray[0] === undefined) {
     arrFinalLinks = [];
   }
-
   document.querySelectorAll('.generatedID').forEach(e => e.remove());
   for (let i = 0; i < arrFinalLinks.length; i++) {
     let aDiv1 = document.createElement('a')
@@ -475,14 +505,13 @@ function funcSendtoBrowserSEC13dFilings() {
     aDiv1.appendChild(bodyText)
     aDiv1.appendChild(newLine)
     document.getElementById('SEC13dFilingsSendtoHTML2').appendChild(aDiv1)
-
     //alternative and easier way:
     // let aDiv1 = document.createElement('div')
     // aDiv1.innerHTML = `<a class="generatedID" href= ${arrFinalLinks[i].url}>${arrFinalLinks[i].title}</a>`
     // document.getElementById('SEC13dFilingsSendtoHTML2').appendChild(aDiv1)
   }
-  sendAlert('SEC13dFilingsSendtoHTML2')
-
+  document.querySelector("#SEC13dFilingsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13dFilings}`;
+  sendAlert2('SEC13dFilingsSendtoHTML2');
 }
 let filterButtonSEC13dFilings = document.getElementById("remove-button-SEC13dFilings");
 filterButtonSEC13dFilings.addEventListener("click", (e) => {
@@ -506,7 +535,6 @@ async function afuncSEC13gLoop() {
     funcFindLinks13g()
     funcSendtoBrowserSEC13g()
   }
-
   setTimeout(afuncSEC13gLoop, rerunTimer1())
 }
 
@@ -526,27 +554,29 @@ function funcFindLinks13g() {
 }
 
 function funcSendtoBrowserSEC13g() {
-  
-
   if (sharedFinalArticlesArray[0] === undefined) {
     arrFinalLinks13g = [];
   }
-
- 
-  // document.querySelector("#SEC13gSendtoHTML1").innerHTML = sharedFinalArticlesArray;
-  // document.querySelector("#SEC13gSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelectorAll('.generatedID2').forEach(e => e.remove());
   for (let i = 0; i < arrFinalLinks13g.length; i++) {
-    //alternative and easier way:
-    let aDiv1 = document.createElement('div')
-    aDiv1.innerHTML = `<a class="generatedID2" target="_blank" rel="noopener noreferrer" href= ${arrFinalLinks13g[i].url}>${arrFinalLinks13g[i].title} </a>`
-    document.getElementById('SEC13gSendtoHTML2').appendChild(aDiv1);
-    
+    let aDiv1 = document.createElement('a')
+    let newLine = document.createElement("br");
+    aDiv1.setAttribute('href', arrFinalLinks13g[i].url)
+    aDiv1.setAttribute('class', "generatedID2")
+    aDiv1.setAttribute('target', '_blank')
+    aDiv1.setAttribute('rel', 'noopener noreferrer')
+    let bodyText = document.createTextNode(arrFinalLinks13g[i].title)
+    aDiv1.appendChild(bodyText)
+    aDiv1.appendChild(newLine)
+    document.getElementById('SEC13gSendtoHTML2').appendChild(aDiv1)
+    // let aDiv1 = document.createElement('div')
+    // aDiv1.innerHTML = `<a class="generatedID2" target="_blank" rel="noopener noreferrer" href= ${arrFinalLinks13g[i].url}>${arrFinalLinks13g[i].title} </a>`
+    // document.getElementById('SEC13gSendtoHTML2').appendChild(aDiv1);
   }
   document.querySelector("#SEC13gSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13g}`;
-  sendAlert('SEC13gSendtoHTML2')
+  sendAlert2('SEC13gSendtoHTML2')
+  // sendAlert3('SEC13gSendtoHTML2')
 }
-
 let filterButtonSEC13g = document.getElementById("remove-button-SEC13g");
 filterButtonSEC13g.addEventListener("click", (e) => {
   playClick()

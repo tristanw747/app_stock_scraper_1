@@ -1,5 +1,6 @@
 body {
-  background-color: rgb(202, 202, 202);
+  background-color: rgb(0, 54, 83);
+  font-family: Arial;
   /* width:auto;
   margin-left:auto;
   margin-right:auto; */
@@ -13,8 +14,7 @@ body {
   grid-template-columns: 120px 0fr 2fr 0fr 2fr 0fr 2fr;
   grid-template-areas:
     "header header header header header header header"
-    "header2 header2 header2 header2 header2 header2 header2"
-  ;
+    "header2 header2 header2 header2 header2 header2 header2";
   border: 3px solid rgb(90, 90, 90);
   padding: 15px;
   margin: 30px;
@@ -26,6 +26,9 @@ body {
 .main-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+   /* grid-template-areas:
+    "header header header header header header header"
+    "header2 header2 header2 header2 header2 header2 header2"; */
   /* grid-template-areas:
   "header header header"
   "sidebar1 sidebar2"
@@ -51,6 +54,7 @@ body {
   max-width: 1800px;
   margin-left:auto;
   margin-right:auto; 
+  background-color: rgb(255, 177, 177);
 }
 .main-grid-4 {
   display: grid;
@@ -62,9 +66,12 @@ body {
   border: 3px solid rgb(90, 90, 90);
   padding: 15px;
   margin: 30px;
-  max-width: 1800px;
+  max-width: 1200px;
   margin-left:auto;
   margin-right:auto; 
+  background-color: rgb(222, 255, 222);
+
+
 }
 
 .sub-last {
@@ -79,9 +86,11 @@ body {
   padding: 5px;
   padding-top: 10px;
   /* margin: 3px; */
-  margin-left: 0px;
+  margin-left: 3px;
   margin-right: 3px;
-  background-color: rgb(201, 166, 234);
+  margin-top: 3px;
+  margin-bottom: 3px;
+  background-color: rgb(178, 228, 255);
   /* height: 80px; */
   min-height: 80px;
   text-align: center;
@@ -89,9 +98,34 @@ body {
   /* border-radius: 3px; */
 }
 
+.main-sub-grid-2-2 {
+  /* border: 1px solid rgb(0, 0, 0); */
+  padding: 5px;
+  padding-top: 10px;
+  /* margin: 3px; */
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  background-color: rgb(178, 228, 255);
+  /* height: 80px; */
+  min-height: 45px;
+
+}
+
 .sub-grid-2-3 {
   /* grid-area: sidebar1; */
   grid-column: span 3;
+  /* background-color: rgb(178, 228, 255); */
+}
+.sub-grid-2-3-2 {
+  /* grid-area: sidebar1; */
+  grid-column: span 3;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  /* background-color: rgb(178, 228, 255); */
 }
 
 .sub-grid-2-4 {
@@ -105,6 +139,15 @@ body {
   grid-column: span 2;
   max-height: 500px;
   overflow: hidden visible;
+  /* background-color: rgb(178, 228, 255); */
+}
+.sub-grid-2-main-2 {
+  /* grid-area: sidebar1; */
+  grid-column: span 2;
+  max-height: 500px;
+  overflow: hidden visible;
+  margin-left: 20px;
+  /* background-color: rgb(178, 228, 255); */
 }
 
 .main-sub-grid {
@@ -114,8 +157,8 @@ body {
   /* margin: 3px; */
   margin-left: 0px;
   margin-right: 3px;
-  background-color: rgb(201, 166, 234);
-  height: 45px;
+  background-color: rgb(255, 198, 124);
+  height: 60px;
   text-align: center;
   overflow: hidden visible;
   /* border-radius: 3px; */
@@ -125,7 +168,7 @@ body {
   /* border: 1px solid rgb(0, 0, 0); */
   padding: 5px;
   margin: 0px;
-  background-color: rgb(201, 166, 234);
+  background-color: rgb(255, 198, 124);
   height: 40px;
   text-align: left;
   overflow: hidden;
@@ -137,8 +180,8 @@ body {
   /* border: 1px solid rgb(0, 0, 0); */
   padding: 5px;
   /* margin: 3px; */
-  background-color: rgb(201, 166, 234);
-  height: 90px;
+  background-color: rgb(255, 198, 124);
+  height: 100px;
   text-align: center;
   overflow: hidden visible;
   /* border-radius: 3px; */
@@ -151,6 +194,15 @@ body {
   grid-area: header;
 }
 
+.header-title-1{
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  padding-top:20px;
+  padding-left: 20px;
+}
 ul {
   list-style-type: none;
   margin: 0;
@@ -166,6 +218,7 @@ li {
   float: left;
 }
 
+
 li a,
 .dropbtn {
   display: inline-block;
@@ -176,12 +229,11 @@ li a,
   font-size: 18px;
   font-family: Arial;
   font-weight: bold;
-
 }
 
 li a:hover,
 .dropdown:hover .dropbtn {
-  background-color: rgb(255, 176, 73);
+  background-color: rgb(178, 228, 255);
 }
 
 li.dropdown {
