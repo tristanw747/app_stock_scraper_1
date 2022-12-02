@@ -407,7 +407,7 @@
       </h3>
       <button id="remove-button-SeekingAlpha">Remove Matches - SeekingAlpha</button>
     </div>
-  
+
     <div class="sub-grid-2-main">
       <h3>ipo<br>
         <span id="CalendarIPOSendtoHTML1"></span>
@@ -437,19 +437,19 @@
   <div class="main-grid-4">
 
     <div class="sub-grid-2-3">
-    <form id="custom-filter">
-      <input type="text" placeholder="custom filter" name="newItem">
-      <button onclick="play()">Submit</button>
-    </form>
-  </div>
+      <form id="custom-filter">
+        <input type="text" placeholder="custom filter" name="newItem">
+        <button onclick="playClick()">Submit</button>
+      </form>
+    </div>
 
 
-  <div class="sub-grid-2-3">
-    <form id="undelete-stock">
-      <input type="text" placeholder="undelete stock name" name="newItem">
-      <button onclick="play()">Submit</button>
-    </form>
-  </div>
+    <div class="sub-grid-2-3">
+      <form id="undelete-stock">
+        <input type="text" placeholder="undelete stock name" name="newItem">
+        <button onclick="playClick()">Submit</button>
+      </form>
+    </div>
 
 
 
@@ -468,24 +468,34 @@
   <h3><span id="error-header"></span>
   </h3>
 
-  <audio id="audio" src="https://www.pachd.com/sfx/lighter2.wav"></audio>
+  <!-- <audio id="audio" src="https://www.pachd.com/sfx/lighter2.wav"></audio> -->
+  <audio id="audio" src="lighter2.wav"></audio>
+  <audio id="alertAudio" src="alarm_ringing_2.wav"></audio>
+
   <script>
-    function play() {
+    function playClick() {
       var audio = document.getElementById("audio");
       audio.play();
-    }
+    };
+  </script>
+
+  <script>
+    function playAlert() {
+      var alertAudio = document.getElementById('alertAudio');
+      alertAudio.play();
+    };
   </script>
 
   <script src="main.js"></script>
 
 
 
-<script src="mainz.js"></script>
+  <!-- <script src="mainz.js"></script> -->
 
 
 
 
-  
+
 </body>
 
 </html>

@@ -2,12 +2,22 @@
 let localStocksList;
 let localExclusion;
 let rando = () => Math.random()
-let rerunTimer0 = () => Math.round((rando() * 2000) + 2000)
+let rerunTimer0 = () => Math.round((rando() * 500) + 1000)
 let rerunTimer1 = () => Math.round((rando() * 3000) + 7000)
 let rerunTimer2 = () => Math.round((rando() * 10000) + 600000)
 let rerunTimer3 = () => Math.round((rando() * 1000) + 3000)
 
 //////////Initialization//////////
+
+
+// window.onload =  function(){
+//   setTimeout( document.getElementById('remove-button-FinancialTimes').click(),1000);
+// }
+
+// function buttonAlert(){
+//   document.getElementById('remove-button-FinancialTimes').click();
+// }
+
 addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
@@ -38,17 +48,16 @@ function funcStartOnLoad() {
   // afuncReutersBusinessLoop()
   // afuncWsjFinanceLoop()
   // afuncWsjNewsLoop()
-  afuncCNBCLoop()
+  // afuncCNBCLoop()
   afuncYahooLoop()
-  // afuncBarronsLoop()
-  // afuncBusinessNewswireLoop()
-  // afuncSEC13dFilingsLoop()
-  // afuncSEC13gLoop()
+  afuncBarronsLoop()
+  afuncBusinessNewswireLoop()
+  afuncSEC13dFilingsLoop()
+  afuncSEC13gLoop()
   // afuncSeekingAlphaPuppeteer()
-  afuncGoogleNews2()
+  // afuncGoogleNews2()
   // speed testing purposes
   // afuncGoogleNews10minLoop() 
-
 
 
 }
@@ -148,6 +157,13 @@ function funcShowHideStockList() {
     tempx.innerHTML = localStocksList;
   } else {
     tempx.innerHTML = "StockList hidden";
+  }
+}
+
+function sendAlert(htmlID) {
+  if (document.querySelector(htmlID).innerHTML) {
+    playAlert();
+    setTimeout(playAlert, 3000);
   }
 }
 ////////////Shared Code Set////////////
@@ -442,11 +458,11 @@ function funcFindLinks13d() {
 }
 
 function funcSendtoBrowserSEC13dFilings() {
+  document.querySelector("#SEC13dFilingsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13dFilings}`;
   if (sharedFinalArticlesArray[0] === undefined) {
     arrFinalLinks = [];
   }
-  // document.querySelector("#SEC13dFilingsSendtoHTML1").innerHTML = sharedFinalArticlesArray;
-  // document.querySelector("#SEC13dFilingsSendtoHTML2").innerHTML = sharedFinalStocksArray;
+
   document.querySelectorAll('.generatedID').forEach(e => e.remove());
   for (let i = 0; i < arrFinalLinks.length; i++) {
     let aDiv1 = document.createElement('a')
@@ -459,16 +475,18 @@ function funcSendtoBrowserSEC13dFilings() {
     aDiv1.appendChild(bodyText)
     aDiv1.appendChild(newLine)
     document.getElementById('SEC13dFilingsSendtoHTML2').appendChild(aDiv1)
+
     //alternative and easier way:
     // let aDiv1 = document.createElement('div')
     // aDiv1.innerHTML = `<a class="generatedID" href= ${arrFinalLinks[i].url}>${arrFinalLinks[i].title}</a>`
     // document.getElementById('SEC13dFilingsSendtoHTML2').appendChild(aDiv1)
   }
-  document.querySelector("#SEC13dFilingsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13dFilings}`;
+  sendAlert('SEC13dFilingsSendtoHTML2')
+
 }
 let filterButtonSEC13dFilings = document.getElementById("remove-button-SEC13dFilings");
 filterButtonSEC13dFilings.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonSEC13dFilings);
   funcSendtoBrowserSEC13dFilings();
@@ -508,9 +526,13 @@ function funcFindLinks13g() {
 }
 
 function funcSendtoBrowserSEC13g() {
+  
+
   if (sharedFinalArticlesArray[0] === undefined) {
     arrFinalLinks13g = [];
   }
+
+ 
   // document.querySelector("#SEC13gSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   // document.querySelector("#SEC13gSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelectorAll('.generatedID2').forEach(e => e.remove());
@@ -518,14 +540,16 @@ function funcSendtoBrowserSEC13g() {
     //alternative and easier way:
     let aDiv1 = document.createElement('div')
     aDiv1.innerHTML = `<a class="generatedID2" target="_blank" rel="noopener noreferrer" href= ${arrFinalLinks13g[i].url}>${arrFinalLinks13g[i].title} </a>`
-    document.getElementById('SEC13gSendtoHTML2').appendChild(aDiv1)
+    document.getElementById('SEC13gSendtoHTML2').appendChild(aDiv1);
+    
   }
   document.querySelector("#SEC13gSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSEC13g}`;
+  sendAlert('SEC13gSendtoHTML2')
 }
 
 let filterButtonSEC13g = document.getElementById("remove-button-SEC13g");
 filterButtonSEC13g.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonSEC13g);
   funcSendtoBrowserSEC13g()
@@ -567,11 +591,12 @@ function funcSendtoBrowserFinancialTimes() {
   document.querySelector("#FinancialTimesSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#FinancialTimesSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#FinancialTimesSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountFinancialTimes} `;
+  sendAlert("#FinancialTimesSendtoHTML1")
 }
 
 let filterButtonFinancialTimes = document.getElementById("remove-button-FinancialTimes");
 filterButtonFinancialTimes.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonFinancialTimes);
   funcSendtoBrowserFinancialTimes()
@@ -598,11 +623,12 @@ function funcSendtoBrowserGlobalNewswire() {
   document.querySelector("#GlobalNewswireSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#GlobalNewswireSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#GlobalNewswireSendtoHTML3").innerHTML = `<br>Bot Run Count: ${runCountGlobalNewswire} `;
+  sendAlert("#GlobalNewswireSendtoHTML1")
 }
 
 let filterButtonGlobalNewswire = document.getElementById("remove-button-GlobalNewswire");
 filterButtonGlobalNewswire.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonGlobalNewswire);
   funcSendtoBrowserGlobalNewswire()
@@ -628,11 +654,12 @@ function funcSendtoBrowserprNewswire() {
   document.querySelector("#prNewswireSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#prNewswireSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#prNewswireSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountprNewswire} `;
+  sendAlert("#prNewswireSendtoHTML1")
 }
 
 let filterButtonprNewswire = document.getElementById("remove-button-prNewswire");
 filterButtonprNewswire.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonprNewswire);
   funcSendtoBrowserprNewswire()
@@ -657,11 +684,12 @@ function funcSendtoBrowserReutersBusiness() {
   document.querySelector("#ReutersBusinessSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#ReutersBusinessSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#ReutersBusinessSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountReutersBusiness}`;
+  sendAlert("#ReutersBusinessSendtoHTML1")
 }
 
 let filterButtonReutersBusiness = document.getElementById("remove-button-ReutersBusiness");
 filterButtonReutersBusiness.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonReutersBusiness);
   funcSendtoBrowserReutersBusiness()
@@ -686,11 +714,12 @@ function funcSendtoBrowserWsjFinance() {
   document.querySelector("#WsjFinanceSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#WsjFinanceSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#WsjFinanceSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountWsjFinance}`;
+  sendAlert("#WsjFinanceSendtoHTML1")
 }
 
 let filterButtonWsjFinance = document.getElementById("remove-button-WsjFinance");
 filterButtonWsjFinance.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonWsjFinance);
   funcSendtoBrowserWsjFinance()
@@ -716,11 +745,12 @@ function funcSendtoBrowserWsjNews() {
   document.querySelector("#WsjNewsSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#WsjNewsSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#WsjNewsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountWsjNews}`;
+  sendAlert("#WsjNewsSendtoHTML1")
 }
 
 let filterButtonWsjNews = document.getElementById("remove-button-WsjNews");
 filterButtonWsjNews.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonWsjNews);
   funcSendtoBrowserWsjNews()
@@ -746,11 +776,12 @@ function funcSendtoBrowserCNBC() {
   document.querySelector("#CNBCSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#CNBCSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#CNBCSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountCNBC}`;
+  sendAlert("#CNBCSendtoHTML1")
 }
 
 let filterButtonCNBC = document.getElementById("remove-button-CNBC");
 filterButtonCNBC.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonCNBC);
   funcSendtoBrowserCNBC()
@@ -775,13 +806,13 @@ async function afuncYahooLoop() {
 function funcSendtoBrowserYahoo() {
   document.querySelector("#YahooSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#YahooSendtoHTML2").innerHTML = sharedFinalStocksArray;
-  // console.log(sharedFinalStocksArray)
   document.querySelector("#YahooSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountYahoo}`;
+  sendAlert("#YahooSendtoHTML1");
 }
 
 let filterButtonYahoo = document.getElementById("remove-button-Yahoo");
 filterButtonYahoo.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonYahoo);
   funcSendtoBrowserYahoo()
@@ -807,11 +838,12 @@ function funcSendtoBrowserBarrons() {
   document.querySelector("#BarronsSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#BarronsSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#BarronsSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountBarrons}`;
+  sendAlert("#BarronsSendtoHTML1")
 }
 
 let filterButtonBarrons = document.getElementById("remove-button-Barrons");
 filterButtonBarrons.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonBarrons);
   funcSendtoBrowserBarrons()
@@ -836,11 +868,12 @@ function funcSendtoBrowserBusinessNewswire() {
   document.querySelector("#BusinessNewswireSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#BusinessNewswireSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#BusinessNewswireSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountBusinessNewswire}`;
+  sendAlert("#BusinessNewswireSendtoHTML1")
 }
 
 let filterButtonBusinessNewswire = document.getElementById("remove-button-BusinessNewswire");
 filterButtonBusinessNewswire.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonBusinessNewswire);
   funcSendtoBrowserBusinessNewswire()
@@ -868,11 +901,12 @@ function funcSendtoBrowserAccessNewswire() {
   document.querySelector("#AccessNewswireSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#AccessNewswireSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#AccessNewswireSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountAccessNewswire}`;
+  sendAlert("#AccessNewswireSendtoHTML1")
 }
 
 let filterButtonAccessNewswire = document.getElementById("remove-button-AccessNewswire");
 filterButtonAccessNewswire.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonAccessNewswire);
   funcSendtoBrowserAccessNewswire()
@@ -898,11 +932,12 @@ function funcSendtoBrowserSeekingAlpha() {
   document.querySelector("#SeekingAlphaSendtoHTML1").innerHTML = sharedFinalArticlesArray;
   document.querySelector("#SeekingAlphaSendtoHTML2").innerHTML = sharedFinalStocksArray;
   document.querySelector("#SeekingAlphaSendtoHTML3").innerHTML = `<br> Bot Run Count: ${runCountSeekingAlpha}`;
+  sendAlert("#SeekingAlphaSendtoHTML1")
 }
 
 let filterButtonSeekingAlpha = document.getElementById("remove-button-SeekingAlpha");
 filterButtonSeekingAlpha.addEventListener("click", (e) => {
-  play()
+  playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonSeekingAlpha);
   funcSendtoBrowserSeekingAlpha()
