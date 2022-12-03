@@ -9,20 +9,13 @@ let rerunTimer3 = () => Math.round((rando() * 1000) + 3000)
 
 //////////Initialization//////////
 
-
-// window.onload =  function(){
-//   setTimeout( document.getElementById('remove-button-FinancialTimes').click(),1000);
-// }
-
-// function buttonAlert(){
-//   document.getElementById('remove-button-FinancialTimes').click();
-// }
-
 addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
 
-  afuncReverseRepoPuppeteer()
+  // afuncReverseRepoPuppeteer()
+
+  
   afuncGreedFearLoop()
   afuncNonFarmPayrollLoop()
   afuncJoltsLoop()
@@ -40,7 +33,7 @@ function funcStartOnLoad() {
   afuncFomcMinutesPuppeteer()
   afuncRatioPEPuppeteer()
 
-  //////////////////////////////////////////////
+  ////////////////////////////////////////////
   afuncAccessNewswirePuppeteer()
   afuncFinancialTimesLoop()
   afuncGlobalNewswireLoop()
@@ -49,12 +42,14 @@ function funcStartOnLoad() {
   afuncWsjFinanceLoop()
   afuncWsjNewsLoop()
   afuncCNBCLoop()
-  afuncYahooLoop()
   afuncBarronsLoop()
   afuncBusinessNewswireLoop()
   afuncSEC13dFilingsLoop()
   afuncSEC13gLoop()
   afuncGoogleNews2()
+
+
+ // afuncYahooLoop()
   // afuncSeekingAlphaPuppeteer()
   // afuncCalendarIPOPuppeteer()
   // speed testing purposes
@@ -142,8 +137,6 @@ document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
   }
   e.target.elements.newItem.value = ''
 })
-
-
 function funcShowHideExclusionList() {
   let tempx = document.getElementById("localExclusionSendtoHTML");
   if (tempx.innerHTML === "Exclusion List Hidden") {
@@ -154,21 +147,18 @@ function funcShowHideExclusionList() {
 }
 function funcShowHideStockList() {
   let tempx = document.getElementById("localStocksSendtoHTML");
-  if (tempx.innerHTML === "StockList hidden") {
+  if (tempx.innerHTML === "Stock List Hidden") {
     tempx.innerHTML = localStocksList;
   } else {
-    tempx.innerHTML = "StockList hidden";
+    tempx.innerHTML = "Stock List Hidden";
   }
 }
-
 async function sendAlert(htmlID) {
   if (document.querySelector(htmlID).innerHTML) {
     await playAlert();
     setTimeout(playAlert, 3000);
   }
 }
-
-
 async function sendAlert2(htmlID) {
   if (document.getElementById(htmlID).hasChildNodes()) {
     await playAlert();
