@@ -435,18 +435,30 @@
 
 
   <div class="main-grid-4">
-
     <div class="main-grid-4-sub-1">
       <form id="custom-filter">
-        <input type="text" class="input-box font-normal" placeholder="Custom Keywords to Filter" name="newItem">
+        <input type="text" class="input-box font-normal" placeholder="Keywords to Filter" name="newItem">
         <button class="button-style" onclick="playClick()">Submit</button>
       </form>
     </div>
 
     <div class="main-grid-4-sub-1">
       <form id="undelete-stock">
-        <input type="text" class="input-box font-normal" placeholder="Undelete Keywords" name="newItem">
+        <input type="text" class="input-box font-normal" placeholder="Add Stock Names" name="newItem">
         <button class="button-style" onclick="playClick()">Submit</button>
+
+
+        <input type="checkbox" id="checkBox1" onclick="funcCheckBoxToggle()" class="stocklist-checkbox" >
+        <label for="checkBox1" class="font-normal-2">Include Base List</label>
+       
+
+        <!-- <label class="container">Check: Include All Stocks
+          <input type="checkbox" checked="unchecked">
+          <span class="checkmark"></span>
+        </label> -->
+
+
+
       </form>
     </div>
 
@@ -457,7 +469,7 @@
 
     <div class="sub-last">
       <button class="button-style" onclick="funcShowHideStockList(),playClick()">Click to Show/Hide</button>
-      <div id="localStocksSendtoHTML" class="font-normal" >Stock List Hidden</div>
+      <div id="localStocksSendtoHTML" class="font-normal">Stock List Hidden</div>
     </div>
 
   </div>

@@ -7,6 +7,10 @@ body {
   font-size: 16px;
   font-weight: normal;
 }
+.font-normal-2 {
+  font-size: 20px;
+  font-weight: normal;
+}
 
 .button-style{
   background-color: #181818; /* Green */
@@ -32,6 +36,14 @@ body {
   margin: 8px 0;
 }
 
+
+.stocklist-checkbox{
+  width: 20px;
+  height: 20px;
+  /* margin-top: 15px; */
+  /* margin-bottom: auto; */
+  margin-left: 20px;
+}
 .main-grid {
   display: grid;
   grid-template-columns: 120px 0fr 2fr 0fr 2fr 0fr 2fr;
@@ -96,9 +108,11 @@ body {
   grid-column: span 3;
   overflow: hidden visible;
   max-height: 300px;
-  margin-left: 5px;
+  margin-left: 10px;
   margin-right: 5px;
+  word-wrap: break-word;
 }
+
 
 .main-sub-grid-2 {
   /* border: 1px solid rgb(0, 0, 0); */
@@ -140,7 +154,7 @@ body {
 
 .main-grid-4-sub-1 {
   grid-column: span 3;
-  margin-left: 5px;
+  margin-left: 10px;
   margin-right: 5px;
 }
 

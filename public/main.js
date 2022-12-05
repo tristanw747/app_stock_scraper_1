@@ -1,5 +1,6 @@
 
-let localStocksList;
+let localStocksList = ['Base List Not Included'];
+let localStocksListFetch;
 let localExclusion;
 let rando = () => Math.random()
 let rerunTimer0 = () => Math.round((rando() * 500) + 1000)
@@ -34,6 +35,7 @@ function funcStartOnLoad() {
   afuncRatioPEPuppeteer()
 
   ////////////////////////////////////////////
+  afuncGoogleNews2()
   afuncAccessNewswirePuppeteer()
   afuncFinancialTimesLoop()
   afuncGlobalNewswireLoop()
@@ -46,7 +48,7 @@ function funcStartOnLoad() {
   afuncBusinessNewswireLoop()
   afuncSEC13dFilingsLoop()
   afuncSEC13gLoop()
-  afuncGoogleNews2()
+  
 
 
  // afuncYahooLoop()
@@ -62,11 +64,34 @@ function funcStartOnLoad() {
 async function afuncLocalStocksImport() {
   let response = await fetch("/localstocklist");
   let fetchResLocalStocks = await response.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
-  localStocksList = fetchResLocalStocks.product1
+  localStocksListFetch = fetchResLocalStocks.product1
   localExclusion = fetchResLocalStocks.product2
 }
 //////////Import Local Filtering Files//////////
 ////////////Shared Code Set////////////
+// function funcCheckBoxToggle() {
+//   let getIDCheckBox = document.getElementById('checkBox1');
+//   if(getIDCheckBox.checked){
+//     localStocksList = localStocksListFetch;
+//   } else {
+//     localStocksList = ['Base List Not Included'];
+//   }
+// }
+
+function funcCheckBoxToggle() {
+  let getIDCheckBox = document.getElementById('checkBox1');
+  if(getIDCheckBox.checked){
+    localStocksList.splice(unshiftCount,1)
+    localStocksList = localStocksList.concat(localStocksListFetch)
+  } else {
+    localStocksList.splice(unshiftCount)
+    localStocksList.push('Base List Not Included')
+    
+  }
+}
+
+
+
 let [sharedFinalStocksArray, sharedFinalArticlesArray, sharedFinalIndexArray] = [[], [], []];
 
 async function afuncMatchFilter(data) {
@@ -115,7 +140,7 @@ document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   if (e.target.elements.newItem.value !== '') {
     if (e.target.elements.newItem.value !== ' ') {
       if (localExclusion.indexOf(e.target.elements.newItem.value) === -1) {
-        localExclusion.push(e.target.elements.newItem.value)
+        localExclusion.unshift(e.target.elements.newItem.value)
         document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
       }
     }
@@ -123,6 +148,7 @@ document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   e.target.elements.newItem.value = ''
 })
 
+let unshiftCount=0;
 document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
   e.preventDefault();
   let indexUndo = localExclusion.indexOf(e.target.elements.newItem.value)
@@ -132,6 +158,8 @@ document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
   } else if (e.target.elements.newItem.value.length > 2) {
     if (localStocksList.indexOf(e.target.elements.newItem.value) === -1) {
       localStocksList.unshift(e.target.elements.newItem.value)
+      // localStocksList.splice(1,0,e.target.elements.newItem.value)
+      unshiftCount+=1;
       document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
     }
   }
