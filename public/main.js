@@ -13,26 +13,24 @@ let rerunTimer3 = () => Math.round((rando() * 1000) + 3000)
 addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
-
+////// single run scrapes
+  // afuncGreedFearLoop()
+  // afuncNonFarmPayrollLoop()
+  // afuncJoltsLoop()
+  // afuncWeeklyJoblessLoop()
+  // afuncMichConsumerLoop()
+  // afuncFedRatesPuppeteer()
+  // afuncMortgageRatesLoop()
+  // afuncReleasePPILoop()
+  // afuncReleaseCPILoop()
+  // afuncFedScheduleLoop()
+  // afuncCpiScheduleLoop()
+  // afuncUnemploymentLoop()
+  // afuncHistoryPELoop()
+  // afuncIndexPCELoop()
+  // afuncFomcMinutesPuppeteer()
+  // afuncRatioPEPuppeteer()
   // afuncReverseRepoPuppeteer()
-
-  
-  afuncGreedFearLoop()
-  afuncNonFarmPayrollLoop()
-  afuncJoltsLoop()
-  afuncWeeklyJoblessLoop()
-  afuncMichConsumerLoop()
-  afuncFedRatesPuppeteer()
-  afuncMortgageRatesLoop()
-  afuncReleasePPILoop()
-  afuncReleaseCPILoop()
-  afuncFedScheduleLoop()
-  afuncCpiScheduleLoop()
-  afuncUnemploymentLoop()
-  afuncHistoryPELoop()
-  afuncIndexPCELoop()
-  afuncFomcMinutesPuppeteer()
-  afuncRatioPEPuppeteer()
 
   ////////////////////////////////////////////
   afuncGoogleNews2()
@@ -48,11 +46,11 @@ function funcStartOnLoad() {
   afuncBusinessNewswireLoop()
   afuncSEC13dFilingsLoop()
   afuncSEC13gLoop()
-  
 
-
- // afuncYahooLoop()
-  // afuncSeekingAlphaPuppeteer()
+// the below websites dont work well 
+ 
+  afuncYahooLoop()
+  afuncSeekingAlphaPuppeteer()
   // afuncCalendarIPOPuppeteer()
   // speed testing purposes
   // afuncGoogleNews10minLoop() 
@@ -80,13 +78,13 @@ async function afuncLocalStocksImport() {
 
 function funcCheckBoxToggle() {
   let getIDCheckBox = document.getElementById('checkBox1');
-  if(getIDCheckBox.checked){
-    localStocksList.splice(unshiftCount,1)
+  if (getIDCheckBox.checked) {
+    localStocksList.splice(unshiftCount, 1)
     localStocksList = localStocksList.concat(localStocksListFetch)
   } else {
     localStocksList.splice(unshiftCount)
     localStocksList.push('Base List Not Included')
-    
+
   }
 }
 
@@ -135,6 +133,25 @@ function funcRemoveDuplicate(inputResponseJson) {
   document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
 }
 
+
+
+
+
+function funcRemoveDuplicate2(inputResponseJson) {
+  afuncMatchFilter(inputResponseJson);
+  if (sharedFinalIndexArray[0] !== undefined) {
+    for (let b = 0; b < sharedFinalIndexArray.length; b++) {
+      localExclusion.push(sharedFinalArticlesArray[b].replace(/\*\s/, '').replace(/\<.*\>/, ''))
+    }
+  }
+  afuncMatchFilter(inputResponseJson)
+  document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
+  document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
+}
+
+
+
+
 document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   e.preventDefault();
   if (e.target.elements.newItem.value !== '') {
@@ -148,7 +165,7 @@ document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   e.target.elements.newItem.value = ''
 })
 
-let unshiftCount=0;
+let unshiftCount = 0;
 document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
   e.preventDefault();
   let indexUndo = localExclusion.indexOf(e.target.elements.newItem.value)
@@ -159,7 +176,7 @@ document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
     if (localStocksList.indexOf(e.target.elements.newItem.value) === -1) {
       localStocksList.unshift(e.target.elements.newItem.value)
       // localStocksList.splice(1,0,e.target.elements.newItem.value)
-      unshiftCount+=1;
+      unshiftCount += 1;
       document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
     }
   }
@@ -538,6 +555,14 @@ filterButtonSEC13dFilings.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonSEC13dFilings);
   funcSendtoBrowserSEC13dFilings();
 });
+
+let filterButtonSEC13dFilings2 = document.getElementById("remove-button-SEC13dFilings-2");
+filterButtonSEC13dFilings2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonSEC13dFilings);
+  funcSendtoBrowserSEC13dFilings()
+});
 //////////SEC13dFilings//////////
 //////////SEC13g//////////
 let runCountSEC13g = 0;
@@ -602,6 +627,13 @@ filterButtonSEC13g.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonSEC13g);
   funcSendtoBrowserSEC13g()
 });
+let filterButtonSEC13g2 = document.getElementById("remove-button-SEC13g-2");
+filterButtonSEC13g2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonSEC13g);
+  funcSendtoBrowserSEC13g()
+});
 //////////SEC13g//////////
 
 
@@ -649,6 +681,13 @@ filterButtonFinancialTimes.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonFinancialTimes);
   funcSendtoBrowserFinancialTimes()
 });
+let filterButtonFinancialTimes2 = document.getElementById("remove-button-FinancialTimes-2");
+filterButtonFinancialTimes2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonFinancialTimes);
+  funcSendtoBrowserFinancialTimes()
+});
 //////////FinancialTimes//////////
 //////////GlobalNewswire//////////
 let runCountGlobalNewswire = 0;
@@ -679,6 +718,13 @@ filterButtonGlobalNewswire.addEventListener("click", (e) => {
   playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonGlobalNewswire);
+  funcSendtoBrowserGlobalNewswire()
+});
+let filterButtonGlobalNewswire2 = document.getElementById("remove-button-GlobalNewswire-2");
+filterButtonGlobalNewswire2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonGlobalNewswire);
   funcSendtoBrowserGlobalNewswire()
 });
 //////////GlobalNewswire//////////
@@ -712,6 +758,13 @@ filterButtonprNewswire.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonprNewswire);
   funcSendtoBrowserprNewswire()
 });
+let filterButtonprNewswire2 = document.getElementById("remove-button-prNewswire-2");
+filterButtonprNewswire2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonprNewswire);
+  funcSendtoBrowserprNewswire()
+});
 //////////prNewswire//////////
 //////////ReutersBusiness//////////
 let runCountReutersBusiness = 0;
@@ -742,6 +795,14 @@ filterButtonReutersBusiness.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonReutersBusiness);
   funcSendtoBrowserReutersBusiness()
 });
+
+let filterButtonReutersBusiness2 = document.getElementById("remove-button-ReutersBusiness-2");
+filterButtonReutersBusiness2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonReutersBusiness);
+  funcSendtoBrowserReutersBusiness()
+});
 //////////ReutersBusiness//////////
 //////////WsjFinance//////////
 let runCountWsjFinance = 0;
@@ -770,6 +831,13 @@ filterButtonWsjFinance.addEventListener("click", (e) => {
   playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonWsjFinance);
+  funcSendtoBrowserWsjFinance()
+});
+let filterButtonWsjFinance2 = document.getElementById("remove-button-WsjFinance-2");
+filterButtonWsjFinance2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonWsjFinance);
   funcSendtoBrowserWsjFinance()
 });
 //////////WsjFinance//////////
@@ -803,6 +871,14 @@ filterButtonWsjNews.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonWsjNews);
   funcSendtoBrowserWsjNews()
 });
+
+let filterButtonWsjNews2 = document.getElementById("remove-button-WsjNews-2");
+filterButtonWsjNews2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonWsjNews);
+  funcSendtoBrowserWsjNews()
+});
 //////////WsjNews//////////
 
 //////////CNBC//////////
@@ -834,7 +910,37 @@ filterButtonCNBC.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonCNBC);
   funcSendtoBrowserCNBC()
 });
+
+
+
+
+let filterButtonCNBC2 = document.getElementById("remove-button-CNBC-2");
+filterButtonCNBC2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonCNBC);
+  funcSendtoBrowserCNBC()
+});
+
 //////////CNBC//////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //////////Yahoo//////////
 let runCountYahoo = 0;
@@ -863,6 +969,14 @@ filterButtonYahoo.addEventListener("click", (e) => {
   playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonYahoo);
+  funcSendtoBrowserYahoo()
+});
+
+let filterButtonYahoo2 = document.getElementById("remove-button-Yahoo-2");
+filterButtonYahoo2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonYahoo);
   funcSendtoBrowserYahoo()
 });
 //////////Yahoo//////////
@@ -896,6 +1010,14 @@ filterButtonBarrons.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonBarrons);
   funcSendtoBrowserBarrons()
 });
+
+let filterButtonBarrons2 = document.getElementById("remove-button-Barrons-2");
+filterButtonBarrons2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonBarrons);
+  funcSendtoBrowserBarrons()
+});
 //////////Barrons//////////
 //////////BusinessNewswire//////////
 let runCountBusinessNewswire = 0;
@@ -924,6 +1046,14 @@ filterButtonBusinessNewswire.addEventListener("click", (e) => {
   playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonBusinessNewswire);
+  funcSendtoBrowserBusinessNewswire()
+});
+
+let filterButtonBusinessNewswire2 = document.getElementById("remove-button-BusinessNewswire-2");
+filterButtonBusinessNewswire2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonBusinessNewswire);
   funcSendtoBrowserBusinessNewswire()
 });
 //////////BusinessNewswire//////////
@@ -959,6 +1089,14 @@ filterButtonAccessNewswire.addEventListener("click", (e) => {
   funcRemoveDuplicate(responseJsonAccessNewswire);
   funcSendtoBrowserAccessNewswire()
 });
+
+let filterButtonAccessNewswire2 = document.getElementById("remove-button-AccessNewswire-2");
+filterButtonAccessNewswire2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonAccessNewswire);
+  funcSendtoBrowserAccessNewswire()
+});
 //////////Puppeteer-AccessNewswire//////////
 
 //////////Puppeteer-SeekingAlpha//////////
@@ -988,6 +1126,14 @@ filterButtonSeekingAlpha.addEventListener("click", (e) => {
   playClick()
   e.preventDefault();
   funcRemoveDuplicate(responseJsonSeekingAlpha);
+  funcSendtoBrowserSeekingAlpha()
+});
+
+let filterButtonSeekingAlpha2 = document.getElementById("remove-button-SeekingAlpha-2");
+filterButtonSeekingAlpha2.addEventListener("click", (e) => {
+  playClick()
+  e.preventDefault();
+  funcRemoveDuplicate2(responseJsonSeekingAlpha);
   funcSendtoBrowserSeekingAlpha()
 });
 //////////Puppeteer-SeekingAlpha//////////

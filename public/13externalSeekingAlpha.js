@@ -21,7 +21,7 @@ export async function afuncSeekingAlpha(url) {
   // await fs.writeFile("troubleshootFullHTML.html", html)
   
   arrSeekingAlpha = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll(".syE")).map(x => x.textContent)
+    return Array.from(document.querySelectorAll(".is-x")).map(x => x.textContent)
   })
   //uncomment below to Troubleshoot
   // await fs.writeFile("troubleshootSentData.html", arrSeekingAlpha)
