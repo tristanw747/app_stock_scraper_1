@@ -1,13 +1,7 @@
 export let arrExternalStocksList=[]
 
 const ttt = 
-[	'musk',
-'disney',
-    'tax',
-    'results',
-    'company',
-    'critical',
-    'crown',
+[	
     '13F-HR',
     "10x Genomics",
     "180 Degree Capital",
