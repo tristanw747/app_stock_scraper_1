@@ -19,7 +19,6 @@ import { afuncBusinessNewswire, urlBusinessNewswire, arrBusinessNewswire } from 
 import { afuncSEC13dFilings, urlSEC13dFilings, arrObject1 } from './public/10externalSEC13dFilings.js'
 import { afuncSEC13g, urlSEC13g, arrObject2 } from './public/11externalSEC13g.js'
 import { afuncReverseRepo, urlReverseRepo, arrReverseRepo } from './public/solo1ReverseRepo.js'
-import { afuncGreedFear, urlGreedFear, arrGreedFear } from './public/solo2GreedFear.js'
 import { afuncNonFarmPayroll, urlNonFarmPayroll, arrNonFarmPayroll2 } from './public/solo3NonFarmPayroll.js'
 import { afuncJolts, urlJolts, arrJolts, arrJolts2 } from './public/solo4Jolts.js'
 import { afuncWeeklyJobless, urlWeeklyJobless, arrWeeklyJobless } from './public/solo5WeeklyJobless.js'
@@ -31,15 +30,13 @@ import { afuncReleaseCPI, urlReleaseCPI, arrReleaseCPI } from './public/solo12CP
 import { afuncFedSchedule, urlFedSchedule, arrFedSchedule } from './public/solo13FedSchedule.js'
 import { afuncCpiSchedule, urlCpiSchedule, arrCpiSchedule } from './public/solo14CpiSchedule.js'
 import { afuncUnemployment, urlUnemployment, arrUnemployment } from './public/solo15Unemployment.js'
-import { afuncHistoryPE, urlHistoryPE, arrHistoryPE } from './public/solo18HistoryPE.js'
 import { afuncIndexPCE, urlIndexPCE, arrIndexPCE } from './public/solo6PCEIndex.js'
 import { afuncFomcMinutes, urlFomcMinutes, arrFomcMinutes } from './public/solo10FomcMinutes.js'
 import { afuncRatioPE, urlRatioPE, arrRatioPE, arrNumbersOnly } from './public/solo17RatioPE.js'
 import { afuncCalendarIPO, urlCalendarIPO, arrCalendarIPO } from './public/solo16CalendarIPO.js'
 import { afuncAccessNewswire, searchTagAccessNewswire, urlAccessNewswire, arrAccessNewswire } from './public/12externalAccessNewswire.js'
 import { afuncSeekingAlpha, urlSeekingAlpha, arrSeekingAlpha } from './public/13externalSeekingAlpha.js'
-import { funcSharedGoogleScrape, arrCumulative, arrGoogleSchedule, funcFullUrl, test1, test2, test3, test4, test5, test6 } from './public/14externalGoogleNews.js'
-import { funcSharedGoogleNews2Scrape, closeBrowser, startBrowser, arrGoogleNews2Schedule, arrCumulative2, link1, link2, link3, link4, link5, link6 } from './public/15externalGoogleNews2.js'
+import { funcSharedGoogleNews2Scrape, closeBrowser, startBrowser, arrCumulative2, link1, link2, link3, link4, link5, link6 } from './public/15externalGoogleNews2.js'
 const port = 3000;
 const app = express();
 app.use(express.static("public"));
@@ -129,11 +126,6 @@ app.get("/ReverseRepo", async (req, res) => {
   res.send({ product1: arrReverseRepo });
 });
 
-app.get("/GreedFear", async (req, res) => {
-  await afuncGreedFear(urlGreedFear)
-  res.send({ product1: arrGreedFear });
-});
-
 app.get("/NonFarmPayroll", async (req, res) => {
   await afuncNonFarmPayroll(urlNonFarmPayroll)
   res.send({ product1: arrNonFarmPayroll2 });
@@ -187,11 +179,6 @@ app.get("/CpiSchedule", async (req, res) => {
 app.get("/Unemployment", async (req, res) => {
   await afuncUnemployment(urlUnemployment)
   res.send({ product1: arrUnemployment });
-});
-
-app.get("/HistoryPE", async (req, res) => {
-  await afuncHistoryPE(urlHistoryPE);
-  res.send({ product1: arrHistoryPE });
 });
 
 app.get("/IndexPCE", async (req, res) => {

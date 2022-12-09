@@ -13,24 +13,22 @@ let rerunTimer3 = () => Math.round((rando() * 1000) + 3000)
 addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
-////// single run scrapes
-  // afuncGreedFearLoop()
-  // afuncNonFarmPayrollLoop()
-  // afuncJoltsLoop()
-  // afuncWeeklyJoblessLoop()
-  // afuncMichConsumerLoop()
-  // afuncFedRatesPuppeteer()
-  // afuncMortgageRatesLoop()
-  // afuncReleasePPILoop()
-  // afuncReleaseCPILoop()
-  // afuncFedScheduleLoop()
-  // afuncCpiScheduleLoop()
-  // afuncUnemploymentLoop()
-  // afuncHistoryPELoop()
-  // afuncIndexPCELoop()
-  // afuncFomcMinutesPuppeteer()
-  // afuncRatioPEPuppeteer()
-  // afuncReverseRepoPuppeteer()
+  ////// single run scrapes
+  afuncNonFarmPayrollLoop()
+  afuncJoltsLoop()
+  afuncWeeklyJoblessLoop()
+  afuncMichConsumerLoop()
+  afuncFedRatesPuppeteer()
+  afuncMortgageRatesLoop()
+  afuncReleasePPILoop()
+  afuncReleaseCPILoop()
+  afuncFedScheduleLoop()
+  afuncCpiScheduleLoop()
+  afuncUnemploymentLoop()
+  afuncIndexPCELoop()
+  afuncFomcMinutesPuppeteer()
+  afuncRatioPEPuppeteer()
+  afuncReverseRepoPuppeteer()
 
   ////////////////////////////////////////////
   afuncGoogleNews2()
@@ -47,17 +45,15 @@ function funcStartOnLoad() {
   afuncSEC13dFilingsLoop()
   afuncSEC13gLoop()
 
-// the below websites dont work well 
- 
+  // the below websites dont work well 
+  // Yahoo will have timeout errors, but has been fixed using abortcontroller with try/catch blocks
+  // seeking alpha will change their class names every 8 hours or so
   afuncYahooLoop()
-  afuncSeekingAlphaPuppeteer()
+  // afuncSeekingAlphaPuppeteer()
   // afuncCalendarIPOPuppeteer()
-  // speed testing purposes
-  // afuncGoogleNews10minLoop() 
-
-
 }
 //////////Initialization//////////
+
 //////////Import Local Filtering Files//////////
 async function afuncLocalStocksImport() {
   let response = await fetch("/localstocklist");
@@ -67,28 +63,18 @@ async function afuncLocalStocksImport() {
 }
 //////////Import Local Filtering Files//////////
 ////////////Shared Code Set////////////
-// function funcCheckBoxToggle() {
-//   let getIDCheckBox = document.getElementById('checkBox1');
-//   if(getIDCheckBox.checked){
-//     localStocksList = localStocksListFetch;
-//   } else {
-//     localStocksList = ['Base List Not Included'];
-//   }
-// }
-
 function funcCheckBoxToggle() {
   let getIDCheckBox = document.getElementById('checkBox1');
   if (getIDCheckBox.checked) {
     localStocksList.splice(unshiftCount, 1)
     localStocksList = localStocksList.concat(localStocksListFetch)
+    document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
   } else {
     localStocksList.splice(unshiftCount)
     localStocksList.push('Base List Not Included')
-
+    document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
   }
 }
-
-
 
 let [sharedFinalStocksArray, sharedFinalArticlesArray, sharedFinalIndexArray] = [[], [], []];
 
@@ -125,17 +111,13 @@ function funcRemoveDuplicate(inputResponseJson) {
   afuncMatchFilter(inputResponseJson);
   if (sharedFinalIndexArray[0] !== undefined) {
     for (let b = 0; b < sharedFinalIndexArray.length; b++) {
-      localExclusion.push(sharedFinalStocksArray[b].replace(/\*\s/, '').replace(/\<.*\>/, ''))
+      localExclusion.unshift(sharedFinalStocksArray[b].replace(/\*\s/, '').replace(/\<.*\>/, ''))
     }
   }
   afuncMatchFilter(inputResponseJson)
-  document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
+  // document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
   document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
 }
-
-
-
-
 
 function funcRemoveDuplicate2(inputResponseJson) {
   afuncMatchFilter(inputResponseJson);
@@ -145,12 +127,9 @@ function funcRemoveDuplicate2(inputResponseJson) {
     }
   }
   afuncMatchFilter(inputResponseJson)
-  document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
+  // document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
   document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
 }
-
-
-
 
 document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -232,17 +211,6 @@ async function afuncReverseRepoPuppeteer() {
     document.querySelector("#ReverseRepoSendtoHTML1").innerHTML = responseJsonReverseRepo.product1
   }
 }
-//////////Puppeteer-ReverseRepo//////////
-//////////GreedFear//////////
-let runCountGreedFear = 0;
-let responseJsonGreedFear;
-async function afuncGreedFearLoop() {
-  let responseGreedFear = await fetch("/GreedFear");
-  responseJsonGreedFear = await responseGreedFear.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
-  document.querySelector("#GreedFearSendtoHTML1").innerHTML = responseJsonGreedFear.product1
-
-}
-//////////GreedFear//////////
 
 //////////NonFarmPayroll//////////
 let runCountNonFarmPayroll = 0;
@@ -322,6 +290,7 @@ async function afuncMortgageRatesLoop() {
   responseJsonMortgageRates = await responseMortgageRates.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
   if (responseJsonMortgageRates.product1[0] === undefined) {
     document.querySelector("#MortgageRatesSendtoHTML1").innerHTML = "Error! Scraping Search Tag Not Found!"
+    setTimeout(afuncMortgageRatesLoop, rerunTimer1())
   } else {
     document.querySelector("#MortgageRatesSendtoHTML1").innerHTML = responseJsonMortgageRates.product1
   }
@@ -396,19 +365,7 @@ async function afuncUnemploymentLoop() {
   }
 }
 //////////Unemployment//////////
-//////////HistoryPE//////////
-let runCountHistoryPE = 0;
-let responseJsonHistoryPE;
-async function afuncHistoryPELoop() {
-  let responseHistoryPE = await fetch("/HistoryPE");
-  responseJsonHistoryPE = await responseHistoryPE.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
-  if (responseJsonHistoryPE.product1[0] === undefined) {
-    document.querySelector("#HistoryPESendtoHTML1").innerHTML = "Error! Scraping Search Tag Not Found!"
-  } else {
-    document.querySelector("#HistoryPESendtoHTML1").innerHTML = responseJsonHistoryPE.product1
-  }
-}
-//////////HistoryPE//////////
+
 
 //////////IndexPCE//////////
 let runCountIndexPCE = 0;
@@ -446,6 +403,7 @@ async function afuncRatioPEPuppeteer() {
   responseJsonRatioPE = await responseRatioPE.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
   if (responseJsonRatioPE.product1[0] === undefined) {
     document.querySelector("#RatioPESendtoHTML1").innerHTML = "Error! Scraping Search Tag Not Found!"
+    setTimeout(afuncRatioPEPuppeteer, rerunTimer1())
   } else {
     document.querySelector("#RatioPESendtoHTML1").innerHTML = responseJsonRatioPE.product1
     storePeRatio = responseJsonRatioPE.product1
@@ -473,7 +431,6 @@ async function afuncRatioPEPuppeteer() {
   document.querySelector("#HistoricalPESendtoHTML3").innerHTML = PeRatioData3
 
 }
-
 //////////Puppeteer-RatioPE//////////
 
 //////////SEC13dFilings//////////
@@ -484,11 +441,6 @@ async function afuncSEC13dFilingsLoop() {
   let responseSEC13dFilings = await fetch("/SEC13dFilings");
   responseJsonSEC13dFilings = await responseSEC13dFilings.json().catch(err => console.log("Notice from Developer: Incorrect server page url, check url directory. ", err));
 
-
-
-
-
-
   if (responseJsonSEC13dFilings.product1[0] === undefined) {
     document.querySelector("#SEC13dFilingsSendtoHTML1").innerHTML = "Error! Scraping Search Tag Not Found!"
   } else {
@@ -496,16 +448,7 @@ async function afuncSEC13dFilingsLoop() {
     runCountSEC13dFilings += 1;
     funcFindLinks13d()
     funcSendtoBrowserSEC13dFilings()
-
-
-
-
-
-
-
-
   }
-
   setTimeout(afuncSEC13dFilingsLoop, rerunTimer1())
 }
 
@@ -911,9 +854,6 @@ filterButtonCNBC.addEventListener("click", (e) => {
   funcSendtoBrowserCNBC()
 });
 
-
-
-
 let filterButtonCNBC2 = document.getElementById("remove-button-CNBC-2");
 filterButtonCNBC2.addEventListener("click", (e) => {
   playClick()
@@ -923,24 +863,6 @@ filterButtonCNBC2.addEventListener("click", (e) => {
 });
 
 //////////CNBC//////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //////////Yahoo//////////
 let runCountYahoo = 0;
@@ -1058,8 +980,6 @@ filterButtonBusinessNewswire2.addEventListener("click", (e) => {
 });
 //////////BusinessNewswire//////////
 
-
-
 //////////Puppeteer-AccessNewswire//////////
 let runCountAccessNewswire = 0;
 let responseJsonAccessNewswire;
@@ -1138,19 +1058,6 @@ filterButtonSeekingAlpha2.addEventListener("click", (e) => {
 });
 //////////Puppeteer-SeekingAlpha//////////
 
-////////////GoogleNews Code Set////////////
-async function afuncGoogleNews10minLoop() {
-  let responseGoogle = await fetch("/google");
-  let jsonDataGoogle = await responseGoogle.json().catch(err => console.log(err));
-  document.querySelector("#GoogleNewstoHTML1").innerHTML = jsonDataGoogle.product1;
-  document.querySelector("#GoogleNewstoHTML2").innerHTML = jsonDataGoogle.product2;
-  document.querySelector("#GoogleNewstoHTML3").innerHTML = jsonDataGoogle.product3;
-  document.querySelector("#GoogleNewstoHTML4").innerHTML = jsonDataGoogle.product4;
-  document.querySelector("#GoogleNewstoHTML5").innerHTML = jsonDataGoogle.product5;
-  document.querySelector("#GoogleNewstoHTML6").innerHTML = jsonDataGoogle.product6;
-  setTimeout(afuncGoogleNews10minLoop, rerunTimer2())
-}
-////////////GoogleNews Code Set////////////
 
 ////////////GoogleNews Code Set////////////
 async function afuncGoogleNews2() {
