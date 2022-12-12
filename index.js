@@ -1,53 +1,57 @@
 "use strict";
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import executablePath from 'puppeteer'
+import executablePath from 'puppeteer';
 import fs from 'fs/promises';
 import express from "express";
 import { arrExternalStocksList } from './public/0-stock-list.js';
 import { arrExternalExclusionList } from './public/0-stock-exclude.js';
-import { afuncFinancialTimes, urlFinancialTimes, arrFinancialTimes } from './public/1externalFinancialTimes.js'
-import { afuncGlobalNewswire, urlGlobalNewswire } from './public/2externalGlobalNewswire.js'
-import { afuncprNewswire, urlprNewswire, arrprNewswire } from './public/3externalprNewswire.js'
-import { afuncReutersBusiness, urlReutersBusiness, arrReutersBusiness } from './public/4externalReutersBusiness.js'
-import { afuncWsjFinance, urlWsjFinance, arrWsjFinance } from './public/5externalWsjFinance.js'
-import { afuncWsjNews, urlWsjNews, arrWsjNews } from './public/6externalWsjNews.js'
-import { afuncCNBC, urlCNBC, arrCNBC } from './public/7externalCNBC.js'
-import { afuncYahoo, urlYahoo, arrYahoo } from './public/16externalYahoo.js'
-import { afuncBarrons, urlBarrons, arrBarrons } from './public/8externalBarrons.js'
-import { afuncBusinessNewswire, urlBusinessNewswire, arrBusinessNewswire } from './public/9externalBusinessWire.js'
-import { afuncSEC13dFilings, urlSEC13dFilings, arrObject1 } from './public/10externalSEC13dFilings.js'
-import { afuncSEC13g, urlSEC13g, arrObject2 } from './public/11externalSEC13g.js'
-import { afuncReverseRepo, urlReverseRepo, arrReverseRepo } from './public/solo1ReverseRepo.js'
-import { afuncNonFarmPayroll, urlNonFarmPayroll, arrNonFarmPayroll2 } from './public/solo3NonFarmPayroll.js'
-import { afuncJolts, urlJolts, arrJolts, arrJolts2 } from './public/solo4Jolts.js'
-import { afuncWeeklyJobless, urlWeeklyJobless, arrWeeklyJobless } from './public/solo5WeeklyJobless.js'
-import { afuncMichConsumer, urlMichConsumer, arrMichConsumer } from './public/solo7MichConsumer.js'
-import { afuncFedRates, urlFedRates, arrFedRates } from './public/solo8FedRates.js'
-import { afuncMortgageRates, urlMortgageRates, arrMortgageRates } from './public/solo9MortgageRates.js'
-import { afuncReleasePPI, urlReleasePPI, arrReleasePPI } from './public/solo11PPI.js'
-import { afuncReleaseCPI, urlReleaseCPI, arrReleaseCPI } from './public/solo12CPI.js'
-import { afuncFedSchedule, urlFedSchedule, arrFedSchedule } from './public/solo13FedSchedule.js'
-import { afuncCpiSchedule, urlCpiSchedule, arrCpiSchedule } from './public/solo14CpiSchedule.js'
-import { afuncUnemployment, urlUnemployment, arrUnemployment } from './public/solo15Unemployment.js'
-import { afuncIndexPCE, urlIndexPCE, arrIndexPCE } from './public/solo6PCEIndex.js'
-import { afuncFomcMinutes, urlFomcMinutes, arrFomcMinutes } from './public/solo10FomcMinutes.js'
-import { afuncRatioPE, urlRatioPE, arrRatioPE, arrNumbersOnly } from './public/solo17RatioPE.js'
-import { afuncCalendarIPO, urlCalendarIPO, arrCalendarIPO } from './public/solo16CalendarIPO.js'
-import { afuncAccessNewswire, searchTagAccessNewswire, urlAccessNewswire, arrAccessNewswire } from './public/12externalAccessNewswire.js'
-import { afuncSeekingAlpha, urlSeekingAlpha, arrSeekingAlpha } from './public/13externalSeekingAlpha.js'
-import { funcSharedGoogleNews2Scrape, closeBrowser, startBrowser, arrCumulative2, link1, link2, link3, link4, link5, link6 } from './public/15externalGoogleNews2.js'
+import { afuncFinancialTimes, urlFinancialTimes, arrFinancialTimes } from './public/1externalFinancialTimes.js';
+import { afuncGlobalNewswire, urlGlobalNewswire } from './public/2externalGlobalNewswire.js';
+import { afuncprNewswire, urlprNewswire, arrprNewswire } from './public/3externalprNewswire.js';
+import { afuncReutersBusiness, urlReutersBusiness, arrReutersBusiness } from './public/4externalReutersBusiness.js';
+import { afuncWsjFinance, urlWsjFinance, arrWsjFinance } from './public/5externalWsjFinance.js';
+import { afuncWsjNews, urlWsjNews, arrWsjNews } from './public/6externalWsjNews.js';
+import { afuncCNBC, urlCNBC, arrCNBC } from './public/7externalCNBC.js';
+import { afuncYahoo, urlYahoo, arrYahoo } from './public/16externalYahoo.js';
+import { afuncBarrons, urlBarrons, arrBarrons } from './public/8externalBarrons.js';
+import { afuncBusinessNewswire, urlBusinessNewswire, arrBusinessNewswire } from './public/9externalBusinessWire.js';
+import { afuncSEC13dFilings, urlSEC13dFilings, arrObject1 } from './public/10externalSEC13dFilings.js';
+import { afuncSEC13g, urlSEC13g, arrObject2 } from './public/11externalSEC13g.js';
+import { afuncReverseRepo, urlReverseRepo, arrReverseRepo } from './public/solo1ReverseRepo.js';
+import { afuncNonFarmPayroll, urlNonFarmPayroll, arrNonFarmPayroll2 } from './public/solo3NonFarmPayroll.js';
+import { afuncJolts, urlJolts, arrJolts, arrJolts2 } from './public/solo4Jolts.js';
+import { afuncWeeklyJobless, urlWeeklyJobless, arrWeeklyJobless } from './public/solo5WeeklyJobless.js';
+import { afuncMichConsumer, urlMichConsumer, arrMichConsumer } from './public/solo7MichConsumer.js';
+import { afuncFedRates, urlFedRates, arrFedRates } from './public/solo8FedRates.js';
+import { afuncMortgageRates, urlMortgageRates, arrMortgageRates } from './public/solo9MortgageRates.js';
+import { afuncReleasePPI, urlReleasePPI, arrReleasePPI } from './public/solo11PPI.js';
+import { afuncReleaseCPI, urlReleaseCPI, arrReleaseCPI } from './public/solo12CPI.js';
+import { afuncFedSchedule, urlFedSchedule, arrFedSchedule } from './public/solo13FedSchedule.js';
+import { afuncCpiSchedule, urlCpiSchedule, arrCpiSchedule } from './public/solo14CpiSchedule.js';
+import { afuncUnemployment, urlUnemployment, arrUnemployment } from './public/solo15Unemployment.js';
+import { afuncIndexPCE, urlIndexPCE, arrIndexPCE } from './public/solo6PCEIndex.js';
+import { afuncFomcMinutes, urlFomcMinutes, arrFomcMinutes } from './public/solo10FomcMinutes.js';
+import { afuncRatioPE, urlRatioPE, arrRatioPE, arrNumbersOnly } from './public/solo17RatioPE.js';
+import { afuncCalendarIPO, urlCalendarIPO, arrCalendarIPO } from './public/solo16CalendarIPO.js';
+import { afuncAccessNewswire, searchTagAccessNewswire, urlAccessNewswire, arrAccessNewswire } from './public/12externalAccessNewswire.js';
+import { afuncSeekingAlpha, urlSeekingAlpha, arrSeekingAlpha } from './public/13externalSeekingAlpha.js';
+import { funcSharedGoogleNews2Scrape, closeBrowser, startBrowser, arrCumulative2, link1, link2, link3, link4, link5, link6 } from './public/15externalGoogleNews2.js';
 const port = 3000;
 const app = express();
-app.use(express.static("public"));
+
 //////////Initialization//////////
-app.get("/localstocklist", async (req, res) => {
-  res.send({ product1: arrExternalStocksList, product2: arrExternalExclusionList });
-});
+app.use(express.static("public"));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 //////////Initialization//////////
+
+
+
+app.get("/localstocklist", async (req, res) => {
+  res.send({ product1: arrExternalStocksList, product2: arrExternalExclusionList });
+});
 
 app.get("/FinancialTimes", async (req, res) => {
   await afuncFinancialTimes(urlFinancialTimes)
