@@ -133,16 +133,19 @@ function funcRemoveDuplicate2(inputResponseJson) {
 
 document.querySelector('#custom-filter').addEventListener('submit', (e) => {
   e.preventDefault();
-  if (e.target.elements.newItem.value !== '') {
-    if (e.target.elements.newItem.value !== ' ') {
+  if (e.target.elements.newItem.value.length>2) {
+    
       if (localExclusion.indexOf(e.target.elements.newItem.value) === -1) {
         localExclusion.unshift(e.target.elements.newItem.value)
         document.querySelector("#localExclusionSendtoHTML").innerHTML = localExclusion
       }
-    }
+    
   }
   e.target.elements.newItem.value = ''
 })
+
+
+
 
 let unshiftCount = 0;
 document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
@@ -159,7 +162,7 @@ document.querySelector('#undelete-stock').addEventListener('submit', (e) => {
       document.querySelector("#localStocksSendtoHTML").innerHTML = localStocksList;
     }
   }
-  e.target.elements.newItem.value = ''
+  e.target.elements.newItem.value = '';
 })
 function funcShowHideExclusionList() {
   let tempx = document.getElementById("localExclusionSendtoHTML");

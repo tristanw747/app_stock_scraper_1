@@ -1,15 +1,15 @@
 {
   "name": "full-scrape-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "A web scraper targeting news websites and returning article headlines in real time",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tristan Wang",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.2",
