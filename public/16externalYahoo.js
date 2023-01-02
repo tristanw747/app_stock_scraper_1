@@ -1,8 +1,9 @@
 "use strict";
 import { load } from 'cheerio'
 import fetch from "node-fetch";
+import fs from 'fs/promises';
 
-export const urlYahoo = 'https://finance.yahoo.com/';
+export const urlYahoo = 'https://finance.yahoo.com/news/';
 export let arrYahoo = [];
 export async function afuncYahoo(url) {
 
@@ -16,8 +17,9 @@ export async function afuncYahoo(url) {
     /////
     clearTimeout(timeId)
     let html = await response.text();
+    await fs.writeFile("troubleshootFullHTML.html", html)
     let $ = load(html);
-    $('.js-content-viewer', html).each(function () {
+    $('.wafer-caas', html).each(function () {
       let title = $(this).text();
       arrYahoo.push(title)
     })

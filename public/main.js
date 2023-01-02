@@ -14,6 +14,7 @@ addEventListener('load', funcStartOnLoad)
 function funcStartOnLoad() {
   afuncLocalStocksImport()
   ////// single run scrapes
+  afuncGoogleNews2()
   afuncNonFarmPayrollLoop()
   afuncJoltsLoop()
   afuncWeeklyJoblessLoop()
@@ -31,7 +32,7 @@ function funcStartOnLoad() {
   afuncReverseRepoPuppeteer()
 
   ////////////////////////////////////////////
-  afuncGoogleNews2()
+ 
   afuncAccessNewswirePuppeteer()
   afuncFinancialTimesLoop()
   afuncGlobalNewswireLoop()

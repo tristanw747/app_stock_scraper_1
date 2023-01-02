@@ -37,13 +37,14 @@ import { afuncCalendarIPO, urlCalendarIPO, arrCalendarIPO } from './public/solo1
 import { afuncAccessNewswire, searchTagAccessNewswire, urlAccessNewswire, arrAccessNewswire } from './public/12externalAccessNewswire.js';
 import { afuncSeekingAlpha, urlSeekingAlpha, arrSeekingAlpha } from './public/13externalSeekingAlpha.js';
 import { funcSharedGoogleNews2Scrape, closeBrowser, startBrowser, arrCumulative2, link1, link2, link3, link4, link5, link6 } from './public/15externalGoogleNews2.js';
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 //////////Initialization//////////
+
 app.use(express.static("public"));
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Scraper listening at http://localhost:${port}`);
 });
 //////////Initialization//////////
 

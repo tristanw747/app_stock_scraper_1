@@ -14,7 +14,10 @@ export async function afuncUnemployment(url) {
   try{
   let $ = load(html);
   
-  $('.highlight-box-green', html).each(function() {
+  // $('.highlight-box-green', html).each(function() {
+    $('#home-latest-news-release > div:nth-child(2) > span > a', html).each(function() {
+
+
     arrUnemployment.push($(this).text())
   })
 } catch(e){

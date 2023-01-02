@@ -1,3 +1,5 @@
+// WORK IN PROGRESS, NOT CURRENTLY FUNCTIONING WITHIN THE APP
+
 "use strict";
 import { load } from 'cheerio';
 import unirest from 'unirest';
