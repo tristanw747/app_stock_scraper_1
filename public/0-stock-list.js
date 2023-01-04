@@ -2,7 +2,6 @@ export let arrExternalStocksList=[]
 
 const ttt = 
 [	
-    '13F-HR',
     "10x Genomics",
     "180 Degree Capital",
     "180 Life Sciences",
